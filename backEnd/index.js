@@ -33,5 +33,12 @@ app.get('./uploadImage', function(req, res, next) {
     
 })
 
+function base64Image(src) {
+  var data = fs.readFileSync(src).toString('base64');
+  return util.format('data:%s;base64,%s', mime.lookup(src), data);
+}
+app.post('/upload_file', upload.any(), (req, res) => {
+  res.send();
+});
 app.listen(3001);
 console.log("Server Listening on port 3001");
