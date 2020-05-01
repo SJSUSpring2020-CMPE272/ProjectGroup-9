@@ -12,6 +12,12 @@ var multer = require('multer');
 var app = express();
 var cors = require('cors');
 
+const upload = multer({ storage });
+const vision = require('@google-cloud/vision');
+const client = new vision.ImageAnnotatorClient({
+    keyFilename : './keyFile.json'
+})
+
 app.set('view engine', 'ejs');
 
 //use cors to allow cross origin resource sharinggg
