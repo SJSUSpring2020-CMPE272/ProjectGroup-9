@@ -1,4 +1,4 @@
-# SeeFood – A Food Recognition and Recommendation App tmp
+# SeeFood – A Food Recognition and Recommendation App
 
 ## Abstract / Project Idea Description:
 
