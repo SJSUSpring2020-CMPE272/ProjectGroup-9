@@ -24,6 +24,16 @@ var bodyParser = require('body-parser');
 var app = express();
 var cors = require('cors');
 
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads');
+  },
+  filename: (req, file, cb) => {
+
+    cb(null, "new.jpg");
+  }
+});
+
 const upload = multer({ storage });
 const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient({
