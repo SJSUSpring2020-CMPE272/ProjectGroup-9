@@ -40,6 +40,34 @@ const client = new vision.ImageAnnotatorClient({
     keyFilename : './keyFile.json'
 })
 
+
+// const projectId = 'ethereal-icon-259321';
+// const keyFilename = './keyFile.json';
+// const {Storage} = require('@google-cloud/storage');
+// const storage = new Storage({projectId, keyFilename});
+// storage
+//   .getBuckets()
+//   .then((results) => {
+//     const buckets = results[0];
+
+//     console.log('Buckets:');
+//     buckets.forEach((bucket) => {
+//       console.log(bucket.name);
+//     });
+//   })
+//   .catch((err) => {
+//     console.error('ERROR:', err);
+//   });
+// try {
+//     const [buckets] =  storage.getBuckets();
+  
+//     console.log('Buckets:');
+//     buckets.forEach(bucket => {
+//       console.log(bucket.name);
+//     });
+//   } catch (err) {
+//     console.error('ERROR:', err);
+//   }
 app.set('view engine', 'ejs');
 
 //use cors to allow cross origin resource sharinggg
@@ -48,6 +76,13 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 //use express session to maintain session data
 
 app.use(bodyParser.json());
+
+// Simple upload form
+var form = '<!DOCTYPE HTML><html><body>' +
+  "<form method='post' action='/upload' enctype='multipart/form-data'>" +
+  "<input type='file' name='image'/>" +
+  "<input type='submit' /></form>" +
+  '</body></html>';
 
 app.get('/', function(req, res) {
   res.writeHead(200, {
