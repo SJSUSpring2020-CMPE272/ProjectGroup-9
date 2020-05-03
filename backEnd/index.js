@@ -95,6 +95,34 @@ app.get('/', function(req, res) {
 app.get('./uploadImage', function(req, res, next) {
     
 })
+app.post('/recognizeImage',async function(req,res){
+  let result = {};
+  await client.webDetection('./uploads/new.jpg')
+  .then(async results => {
+    console.log(results[0]);
+      const labels = results[0].labelAnnotations;
+      // console.log("Labels:",results[0].labelAnnotations);
+      console.log("Best Labels:",results[0].webDetection.bestGuessLabels);
+       labels.forEach(label=> console.log(label.description));
+      result = results[0].webDetection.bestGuessLabels[0];
+      
+      
+    res.writeHead(200,{
+      'Content-Type' : 'text/plain'
+  })
+  console.log(result);
+  res.end(results[0].webDetection.bestGuessLabels[0].label);
+  
+  })
+  .catch(err => {
+      // console.log("ERROR", err);
+      res.writeHead(400,{
+        'Content-Type' : 'text/plain'
+    })
+    res.end("Error");
+  })
+     
+});
 
 // Get the uploaded image
 // Image is uploaded to req.file.path
