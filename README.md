@@ -12,7 +12,9 @@ The user is given the option of uploading an image from the file system or to ta
 
 **Frontend:** HTML, CSS, Bootstrap, React
 
-**Backend:** Node - Express / Flask
+**Backend:** NodeJS
+
+**Database:** MongoDB Atlas
 
 **Image Recognition:** Google Cloud Vision ML
 
