@@ -125,7 +125,7 @@ def predict_img(img):
 
     convnet = small_convnet()
 
-    weights_path = os.path.join(config.weights_dir, config.weights_name)
+    weights_path = os.path.join(weights_dir, weights_name)
 
     convnet.load_weights(weights_path)
     p = convnet.predict_classes(x, verbose=1)
