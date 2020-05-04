@@ -23,8 +23,8 @@ The user is given the option of uploading an image from the file system or to ta
 **Image Recognition:** Google Cloud Vision ML
 
 ## Stack Overview
-<img src="/images/architecture-overview.png" height=75% width=75%>
+<img src="images/architecture-overview.png" height=75% width=75%>
 
 ## Project Architecture
-<img src="/images/project-architecture.png" height=75% width=75%>
+<img src="images/project-architecture.png" height=75% width=75%>
 
