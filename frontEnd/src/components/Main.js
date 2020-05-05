@@ -10,6 +10,7 @@ class Main extends Component {
                 {/* <Route path="/" component={Home}/> */}
                 <Route path="/Home" component={Home}/>
                 <Route path="/NearbyRestaurants" component={NearbyRestaurants}/>
+                <Route path="/RecipePage" component={RecipePage}/>
             </div>
         )
     }

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import '../../App.css';
 import axios from 'axios';
 import {Redirect} from 'react-router';
-import logo from '../homepageImage.jpg';
+ import logo from '../homepageImage.jpg';
 
 class Home extends Component {
     //call the constructor method
@@ -18,12 +18,18 @@ class Home extends Component {
             images: '',
             foodName: '',
             nextPage: false,
-            foodPic : null
+            foodPic : null,
+            recipe: false,
+            lat: 0,
+            long: 0
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         this.findRestaurants = this.findRestaurants.bind(this);
+        this.findRecipe = this.findRecipe.bind(this);
+        this.findRecipeSearch = this.findRecipeSearch.bind(this);
         this.searchChangeHandler = this.searchChangeHandler.bind(this);
+        this.findLocation = this.findLocation.bind(this);
         // Bind the handlers to this class
     }
 
@@ -32,12 +38,37 @@ class Home extends Component {
         document.getElementById('getFile').click();
     }
     async findRestaurants () {
-       this.setState({
+        await this.findLocation();
+        this.setState({
         nextPage: true
        });
     }
+    async findLocation(){
+        if("geolocation" in navigator){
+            navigator.geolocation.getCurrentPosition((position)=>{
+                console.log(position.coords.latitude);
+                console.log(position.coords.longitude);
+                localStorage.setItem('latitude', position.coords.latitude);
+                localStorage.setItem('longitude', position.coords.longitude);
+            });
+        }
+        else {
+            alert("Denied Permission");
+        }
+    }
+    async findRecipe () {
+        this.setState({
+            recipe: true
+        });
+    }
+    async findRecipeSearch () {
+        this.setState({
+            recipe: true
+        });
+        localStorage.setItem("foodName", this.state.foodName);
+    }
 
-    searchChangeHandler = (e) => {
+    async searchChangeHandler(e) {
         this.setState({
             foodName: e.target.value
         })
@@ -88,6 +119,9 @@ class Home extends Component {
         if (this.state.nextPage) {
             redirectVar = <Redirect to= "/NearbyRestaurants"/>
         }
+        else if(this.state.recipe){
+            redirectVar = <Redirect to= "/RecipePage"/>
+        }
         else {
             if(this.state.foodPic != null && this.state.foodName.length) {
                 foodPicImage = 
@@ -97,14 +131,25 @@ class Home extends Component {
                     <h3 className="float-left mt-10">&nbsp;&nbsp;&nbsp;&nbsp;{this.state.foodName}</h3>
                 </span>
                 <button type="button"  onClick={this.findRestaurants} className="btn btn-primary mt-5">Find Restaurants that Serve this Dish</button>
-                <button type="button"  onClick={this.findRestaurants} className="btn btn-success mt-5" id="cookYourself">Cook it Yourself!</button>
+                <button type="button"  onClick={this.findRecipe} className="btn btn-success mt-5" id="cookYourself">Cook it Yourself!</button>
                 </div>
             }
+            // else {
+            //     foodPicImage =
+            //         <div>
+            //             <span className="imageBackground">
+            //                 {/* <img className="float-left" src={this.state.foodPic} width="200" height="200" /> */}
+            //                 <h3 className="float-left mt-10">&nbsp;&nbsp;&nbsp;&nbsp;Sorry! If You're Sure This is a Food Item, Shoot us an Email and we'll Fix it ASAP</h3>
+            //             </span>
+            //             <button type="button" onClick={this.findRestaurants} className="btn btn-primary mt-5">Find Restaurants that Serve this Dish</button>
+            //             <button type="button" onClick={this.findRecipe} className="btn btn-success mt-5" id="cookYourself">Cook it Yourself!</button>
+            //         </div> 
+            // }
             console.log(foodPicImage);
             redirectVar =  <div class="container">
-                <div className="navbar navbar-dark bg-primary mb-0 container">
+                <div className="navbar navbar-dark bg-primary mb-0 container sticky-top">
 
-        <div class="navbar-header">
+        <div class="navbar-header sticky-top">
             <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
@@ -128,14 +173,14 @@ class Home extends Component {
                     </ul>
                 </li> */}
             </ul>
-            {/* <form class="navbar-form navbar-left">
+            <form class="navbar-form navbar-left" onSubmit={this.findRecipeSearch}>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search"/>
+                    <input type="text" class="form-control" placeholder="Search Recipes" onChange={this.searchChangeHandler}/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                     </span>
                 </div>
-            </form> */}
+            </form>
         </div>
     </div>
             <div className="bodyContainer">
@@ -143,8 +188,14 @@ class Home extends Component {
                      {/* <img src = {this.props.profile.profilePic} height="50" className="profileimage"/> */}
                      {/* <div className="pt-15"><input type="text" onChange = {this.searchChangeHandler} className="col-xs-3 ml-25" placeholder="Where do you want to go?"/></div> */}
                      <div className="">
+                        
                         <input  id="getFile" name="file" type="file" name="selectedFile" className = "hide" onChange={this.onChange} multiple/>
-                        <button type="submit"  onClick={this.uploadFile} className="btn btn-primary mt-20">Upload</button>
+                            <div className="pageTitle">
+                                <h1>Like What You See? </h1>
+                                <h1>Don't Know What It Is?</h1>
+                                <h3>Upload An Image to find out!</h3>
+                            </div>
+                        <button type="submit" onClick={this.uploadFile} className="btn btn-primary mt-20">Upload</button>
                     </div>
                     
                 </div>
