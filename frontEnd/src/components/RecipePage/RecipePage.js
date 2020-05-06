@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router';
 import Pagination from "../NearbyRestaurants/pagination";
 import { paginate } from "../../utils/paginate";
-
+// import { Tabs, Tab } from 'react-bootstrap';
 
 
 class Home extends Component {
@@ -19,12 +19,16 @@ class Home extends Component {
             time: null,
             ingredientsRequired: [],
             stepsList: [],
+            nutriList: [],
+            description: ''
         };
         // Bind the handlers to this class
     }
     handlePageChange = page => {
         this.setState({ currentPage: page });
     }
+    
+
 
     async componentDidMount() {
         // https://developers.zomato.com/api/v2.1/categories
@@ -42,12 +46,18 @@ class Home extends Component {
         await axios.get('http://localhost:3001/getRecipe/?dish=' + encodeURIComponent(foodName))
             .then(async (response) => {
                 // access results...
+                let stepsLen = response.data[0].steps.length;
+                let IngredientLen = response.data[0].ingredients.length;
+                let forstepsList = response.data[0].steps.slice(1, stepsLen-1).split(',');
+                let forIngredientList = response.data[0].ingredients.slice(1, IngredientLen-1).split(',');
                 console.log(response.data[0]);
                 this.setState({
                     foodName: foodName,
-                    stepsList: response.data[0].steps,
+                    stepsList: forstepsList,
                     time: response.data[0].minutes,
-                    ingredientsRequired: response.data[0].ingredients
+                    ingredientsRequired: forIngredientList,
+                    nutriList: JSON.parse(response.data[0].nutrition),
+                    description: response.data[0].description
                 })
             })
             .catch(err => {
@@ -55,17 +65,18 @@ class Home extends Component {
                     foodName: foodName,
                     stepsList: 'SORRY, NO DATA',
                     time: 'SORRY, NO DATA',
-                    ingredientsRequired: 'SORRY, NO DATA'
+                    ingredientsRequired: 'SORRY, NO DATA',
                 })
             })
         console.log(this.state.stepsList);
+        console.log(this.state.ingredientsRequired);
     }
 
 
     render = () => {
         return (
             <div>
-                <div className="navbar navbar-inverse mb-0 container ">
+                <div className="navbar navbar-inverse mb-0 container">
 
                     <div class="navbar-header">
                         <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
@@ -79,7 +90,7 @@ class Home extends Component {
                     <div id="navbarCollapse" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="/Home">Home</a></li>
-                            <li><a href="#">Profile</a></li>
+                            {/* <li><a href="#">Profile</a></li>
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">Messages <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -89,7 +100,7 @@ class Home extends Component {
                                     <li class="divider"></li>
                                     <li><a href="#">Trash</a></li>
                                 </ul>
-                            </li>
+                            </li> */}
                         </ul>
                         {/* <form class="navbar-form navbar-left" action="http://localhost:3001/getRecipe/" method="GET" onSubmit={this.findRecipe}>
                             <div class="input-group">
@@ -103,17 +114,112 @@ class Home extends Component {
                 </div>
                 <br />
                 <h2>Cook it Yourself!</h2>
-                <div class="card">
-                    <div class="card-header">
-                        Ingredients
+                <footer>Takes about {this.state.time} minutes</footer>
+                <hr/>
+                <div class="recipeContainer">
+                    <div class="ingredientContainer">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Ingredients</h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul>
+                                {this.state.ingredientsRequired.map(item => (
+                                        <li>{item.replace(/'/g, "")}</li>
+                                ))}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <blockquote class="blockquote mb-0">
-                            {this.state.ingredientsRequired}
-                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                        </blockquote>
+                    <div class="stepsContainer">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Preparation Steps</h3>
+                            </div>
+                            <div class="panel-body">
+                                <ol type="1">
+                                {this.state.stepsList.map(item => (
+                                        <li>{item.replace(/'/g, "")}</li>
+                                ))}
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nutritionContainer">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Nutritional Information</h3>
+                            </div>
+                            <div class="panel-body nutriClass">
+                                <p><b>Calories</b><br/>
+                                    {
+                                        this.state.nutriList[0]
+                                    }
+                                </p>
+                                <p><b>Total Fat*</b><br /> 
+                                    {
+                                        this.state.nutriList[1]
+                                    }
+                                </p>
+                                <p><b>Sugar*</b><br /> 
+                                    {
+                                        this.state.nutriList[2]
+                                    }
+                                </p>
+                                <p><b>Sodium*</b><br /> 
+                                    {
+                                        this.state.nutriList[3]
+                                    }
+                                </p>
+                                <p><b>Protein*</b><br />   
+                                    {
+                                        this.state.nutriList[4]
+                                    }
+                                </p>
+                                <p><b>Saturated Fat*</b><br /> 
+                                    {
+                                        this.state.nutriList[5]
+                                    }
+                                </p>
+                                <p><b>Carbohydrates*</b><br /> 
+                                    {
+                                        this.state.nutriList[6]
+                                    }
+                                </p>
+                                <footer>* in % Daily Value</footer>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <hr />
+                <div class="description">
+                    <h3>Things to Know</h3>
+                    <p>{this.state.description}</p>
+                </div>
+                
+                {/* <div class="container-fluid recipeContainer">
+                    <div class="row">
+                        <div class="col">
+                            <h3>Ingredients</h3>
+                            {this.state.ingredientsRequired.map(item => (
+                                <div>
+                                    <p>{item.replace(/'/g, "")}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <div class="col-6">
+                            <h3>Preparation Steps</h3>
+                            {this.state.stepsList.map(item => (
+                                <div>
+                                    <p>{item.replace(/'/g, "")}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="col">
+                            <h3>Nutrition Information</h3>
+                        </div>
+                    </div>
+                </div> */}
                 <br />
             </div>
 

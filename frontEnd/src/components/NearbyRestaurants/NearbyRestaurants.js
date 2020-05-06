@@ -17,6 +17,8 @@ class Home extends Component {
             restaurantList: [],
             currentPage: 1,
             pageSize: 2,
+            latitude: 0,
+            longitude: 0
         };
         // Bind the handlers to this class
     }
@@ -71,13 +73,15 @@ class Home extends Component {
                 if(response.data.status == 'ZERO_RESULTS'){
                     this.setState({
                         restaurantList: response.data.results,
-                        foodName: foodName,
+                        foodName: 'NOT A FOOD',
                     }) 
                 }
                 else {
                     this.setState({
                         restaurantList: response.data.results,
                         foodName: foodName,
+                        latitude: latitude,
+                        longitude: longitude
                     })
                 }
                 
@@ -144,6 +148,9 @@ class Home extends Component {
                         :
                         null
                     }
+                    <br/>
+                    <a type="submit" class="btn btn-primary mt-2" target="_blank" href={`https://www.google.com/maps/dir/?api=1&origin=${this.state.latitude},${this.state.longitude}&destination=${restaurantList.geometry.location.lat},${restaurantList.geometry.location.lng}`}>Get Directions!</a>
+
                 </span>
                 <br/>
                 </div>
@@ -171,7 +178,7 @@ class Home extends Component {
                     <div id="navbarCollapse" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="/Home">Home</a></li>
-                            <li><a href="#">Profile</a></li>
+                            {/* <li><a href="#">Profile</a></li>
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">Messages <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -181,16 +188,16 @@ class Home extends Component {
                                     <li class="divider"></li>
                                     <li><a href="#">Trash</a></li>
                                 </ul>
-                            </li>
+                            </li> */}
                         </ul>
-                        <form class="navbar-form navbar-left">
+                        {/* <form class="navbar-form navbar-left">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Search" />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                                 </span>
                             </div>
-                        </form>
+                        </form> */}
                     </div>
                 </div>
                 <br />
