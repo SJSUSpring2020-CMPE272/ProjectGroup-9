@@ -23,12 +23,12 @@
 
 .background-image {
   background-image: url("../src/components/homepageImage.jpg");
-  height: 600px;
+  height: 770px;
   width: 100%;
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; 
-  opacity: 90%;
+  opacity: 100%;
 }
 
 .hide {
