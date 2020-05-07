@@ -130,7 +130,12 @@ class Home extends Component {
 
             <div class="col-xs-10 individualPropertyDesc">
                 <div>
-                        <img src= {restaurantPhoto + restaurantList.photos[0].photo_reference + '&key=' + key} width="400" height="200" class="col-lg-4"/>
+                    {
+                        restaurantList.photos ?
+                        <img src={restaurantPhoto + restaurantList.photos[0].photo_reference + '&key=' + key} width="400" height="200" class="col-lg-4" />
+                        : null
+                    }
+                    
                 {/* <img src = {properties.imageFiles} width="650" height="200" class="col-lg-4"/> */}
                 <div class="col-lg-6">
                 <span>
@@ -164,7 +169,7 @@ class Home extends Component {
         
         return (
             <div>
-                <div className="navbar navbar-inverse mb-0 container">
+                <div className="navbar navbar-dark bg-primary mb-0 container navbar-fixed-top">
 
                     <div class="navbar-header">
                         <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
@@ -173,11 +178,11 @@ class Home extends Component {
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a href="#" class="navbar-brand">SeeFood</a>
+                        <a href="#" class="navbar-brand" id="navText">SeeFood</a>
                     </div>
                     <div id="navbarCollapse" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="/Home">Home</a></li>
+                            <li class="active"><a href="/Home" id="navText">Home</a></li>
                             {/* <li><a href="#">Profile</a></li>
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">Messages <b class="caret"></b></a>
@@ -200,6 +205,7 @@ class Home extends Component {
                         </form> */}
                     </div>
                 </div>
+                <br />
                 <br />
                 <h2>Nearby restaurants</h2>
                 <div>

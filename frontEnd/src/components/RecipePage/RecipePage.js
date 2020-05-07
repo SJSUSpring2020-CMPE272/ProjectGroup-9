@@ -63,9 +63,9 @@ class Home extends Component {
             .catch(err => {
                 this.setState({
                     foodName: foodName,
-                    stepsList: 'SORRY, NO DATA',
+                    stepsList: ['SORRY, NO DATA'],
                     time: 'SORRY, NO DATA',
-                    ingredientsRequired: 'SORRY, NO DATA',
+                    ingredientsRequired: ['SORRY, NO DATA'],
                 })
             })
         console.log(this.state.stepsList);
@@ -76,7 +76,7 @@ class Home extends Component {
     render = () => {
         return (
             <div>
-                <div className="navbar navbar-inverse mb-0 container">
+                <div className="navbar navbar-dark bg-primary mb-0 container navbar-fixed-top">
 
                     <div class="navbar-header">
                         <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
@@ -85,11 +85,11 @@ class Home extends Component {
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a href="#" class="navbar-brand">SeeFood</a>
+                        <a href="#" class="navbar-brand" id="navText">SeeFood</a>
                     </div>
                     <div id="navbarCollapse" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="/Home">Home</a></li>
+                            <li class="active"><a href="/Home" id="navText">Home</a></li>
                             {/* <li><a href="#">Profile</a></li>
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">Messages <b class="caret"></b></a>
@@ -112,6 +112,7 @@ class Home extends Component {
                         </form> */}
                     </div>
                 </div>
+                <br />
                 <br />
                 <h2>Cook it Yourself!</h2>
                 <footer>Takes about {this.state.time} minutes</footer>

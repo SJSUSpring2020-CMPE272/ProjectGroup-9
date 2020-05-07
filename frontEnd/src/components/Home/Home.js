@@ -304,7 +304,7 @@ class Home extends Component {
             console.log(foodPicImage);
             redirectVar =  <div class="container">
                 {/* <div className="navbar navbar-dark bg-primary mb-0 container sticky-top"> */}
-                <div class="navbar navbar-dark bg-primary sticky-top mb-0">
+                <div class="navbar navbar-dark bg-primary navbar-fixed-top mb-0">
                     
         <div class="navbar-header">
             <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
@@ -355,7 +355,7 @@ class Home extends Component {
                             <div className="pageTitle">
                                 <h1 class="rainbowText">Like What You See? </h1>
                                 <h1 class="rainbowText">Don't Know What It Is?</h1>
-                                <h3>Upload An Image to find out!</h3>
+                                <h3>Upload Any Food Image To Find Out!</h3>
                                 {/* <Autosuggest
                                     datalist={['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Rev.', 'Prof.']}
                                     placeholder="Name prefix"
@@ -363,13 +363,16 @@ class Home extends Component {
                             </div>
                         <button type="submit" onClick={this.uploadFile} className="btn btn-primary mt-20">Upload</button>
                     </div>
-                    
+                    <div className="box2">
+                        {foodPicImage}
+
+                    </div>
                 </div>
                 <br/>
-                <div className="box2">
+                {/* <div className="box2">
                 {foodPicImage}
                 
-                </div>
+                </div> */}
             </div>
                 </div>;
         }

@@ -23,12 +23,12 @@
 
 .background-image {
   background-image: url("../src/components/homepageImage.jpg");
-  height: 770px;
+  height: 900px;
   width: 100%;
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; 
-  opacity: 100%;
+  opacity: 90%;
 }
 
 .hide {
@@ -93,6 +93,7 @@
 }
 .box2 {
   margin: 5% 5%;
+  /* margin-top: -100px; */
 }
 .float-left {
   float: left;
