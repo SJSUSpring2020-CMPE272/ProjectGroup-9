@@ -28,3 +28,10 @@ The user is given the option of uploading an image from the file system or to ta
 ## Project Architecture
 <img src="/images/project-architecture.png" height=75% width=75%>
 
+## Run Instructions:
+
+Please run the `npm start` command in the frontEnd and backEnd directories
+
+## `keyFile.json` File
+
+Considering Cyber Safety, we have not uploaded our keyFile on GitHub. Please reach out to us if you would like to clone and run the repo seamlessly.
