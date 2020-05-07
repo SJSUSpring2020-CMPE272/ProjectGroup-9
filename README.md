@@ -30,8 +30,8 @@ The user is given the option of uploading an image from the file system or to ta
 
 ## Run Instructions:
 
-Please run the `npm start` command in the frontEnd and backEnd directories
+Please run the `npm start` command in the `frontEnd` and `backEnd` directories to run the project.
 
-## `keyFile.json` File
+### `keyFile.json` File
 
-Considering Cyber Safety, we have not uploaded our keyFile on GitHub. Please reach out to us if you would like to clone and run the repo seamlessly.
+Considering cyber security issues, we have not uploaded our keyFile on GitHub. Please reach out to us if you would like to clone and run the repo locally.
